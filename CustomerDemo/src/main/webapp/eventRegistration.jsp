@@ -62,10 +62,15 @@
 		<option value="aperfectevent">A Perfect Event</option>
 		<option value="other">Other</option>
 	</select><br>
-	<p>Username:</p>
-	<input type="text" name="username" value="<%= username != null ? username : "" %>" <%= username != null ? "readonly" : "" %> required><br>
-	<p>Password:</p>
- 	<input type="password" name="password" value="<%= password != null ? password : "" %>" <%= password != null ? "readonly" : "" %> minlength="4" required><br><br>
+	<% if (username == null) { %>
+	    <p>Username:</p>
+	    <input type="text" name="username" required><br>
+	    <p>Password:</p>
+	    <input type="password" name="password" minlength="4" required><br><br>
+	<% } else { %>
+	    <input type="hidden" name="username" value="<%= username %>">
+	    <input type="hidden" name="password" value="<%= password %>">
+	<% } %>
 	
 	<input type="submit" name="submit" value="Submit">
   </form>
