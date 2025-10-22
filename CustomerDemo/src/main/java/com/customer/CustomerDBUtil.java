@@ -21,13 +21,13 @@ public class CustomerDBUtil {
 		
 		
 		try {
-				
+
 			con = DBConnect.getConnection();
 			stmt = con.createStatement();
 			String sql = "select * from customize where username='"+userName+"' and password='"+password+"'";
 			rs = stmt.executeQuery(sql);
-			
-			if (rs.next()) {
+
+			while (rs.next()) {
 				int eventid = rs.getInt(1);
 				String name = rs.getString(2);
 				String type = rs.getString(3);
@@ -38,12 +38,12 @@ public class CustomerDBUtil {
 				String planner = rs.getString(8);
 				String userU = rs.getString(9);
 				String passU = rs.getString(10);
-				
+
 				customize c = new customize(eventid, name, type, description, date, time, location, planner, userU, passU);
 				cus.add(c);
 			}
 
-			
+
 		}
 		catch (Exception e) {
 			e.printStackTrace();

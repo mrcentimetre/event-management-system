@@ -7,7 +7,7 @@ public class DBConnect {
 	
 	private static String url = "jdbc:mysql://localhost:3306/event";
 	private static String userName = "root";
-	private static String password =  "udana2001";
+	private static String password =  "root";
 	private static Connection con;
 	
 	public static Connection getConnection() {

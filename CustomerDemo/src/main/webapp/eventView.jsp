@@ -24,22 +24,12 @@
     </nav>
 
 
-	<c:forEach var="cus" items="${cusDetails}">
-	
 	<h1>My Events</h1>
-	
+
 	<a href="eventRegistration.jsp">
 	<input type="button" style="margin:0px 0px 0px 80%;" class="glowing-orange-button" name="update" value="Create Event">
 	</a>
-	
-	<c:set var="eventid" value="${cus.eventid}"/>
-	<c:set var="name" value="${cus.name}"/>
-	<c:set var="email" value="${cus.type}"/>
-	<c:set var="date" value="${cus.date}"/>
-	<c:set var="time" value="${cus.time}"/>
-	<c:set var="location" value="${cus.location}"/>
-	<c:set var="planner" value="${cus.planner}"/>
-	
+
 	<table id="customers">
   <tr>
     <th>Event ID</th>
@@ -49,8 +39,18 @@
     <th>Time</th>
     <th>City</th>
     <th>Planner</th>
-    <th></th>
+    <th>Actions</th>
   </tr>
+
+  <c:forEach var="cus" items="${cusDetails}">
+	<c:set var="eventid" value="${cus.eventid}"/>
+	<c:set var="name" value="${cus.name}"/>
+	<c:set var="type" value="${cus.type}"/>
+	<c:set var="date" value="${cus.date}"/>
+	<c:set var="time" value="${cus.time}"/>
+	<c:set var="location" value="${cus.location}"/>
+	<c:set var="planner" value="${cus.planner}"/>
+
   <tr>
     <td>${cus.eventid}</td>
     <td>${cus.name}</td>
@@ -69,11 +69,11 @@
 		<c:param name="location" value="${location}"/>
 		<c:param name="planner" value="${planner}"/>
 	</c:url>
-	
+
 	<a href="${cusupdate}">
 	<input type="button" class="glowing-button" name="update" value="Edit">
 	</a>
-	
+
 	<c:url value="eventDelete.jsp" var="cusdelete">
 		<c:param name="eventid" value="${eventid}"/>
 		<c:param name="name" value="${name}"/>
@@ -83,16 +83,15 @@
 		<c:param name="location" value="${location}"/>
 		<c:param name="planner" value="${planner}"/>
 	</c:url>
-	
+
 	<a href="${cusdelete}">
 	<input type="button" class="glowing-red-button" name="delete" value="Delete">
 	</a>
-    
+
     </td>
   </tr>
+  </c:forEach>
 </table>
-	
-	</c:forEach>
 	
 	
 	<footer>
