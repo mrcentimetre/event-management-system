@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%
+    // Check if user is logged in
+    String username = (String) session.getAttribute("username");
+    String password = (String) session.getAttribute("password");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +22,12 @@
             <li><a href="#">About</a></li>
             <li><a href="#">Services</a></li>
             <li><a href="#">Contact</a></li>
-            <li><a href="userLogin.jsp">Log in</a></li>
+            <% if (username != null) { %>
+                <li><a href="eventView.jsp">My Events</a></li>
+                <li><a href="LogoutServlet">Logout</a></li>
+            <% } else { %>
+                <li><a href="userLogin.jsp">Log in</a></li>
+            <% } %>
           </ul>
         </div>
     </nav>
@@ -53,9 +63,9 @@
 		<option value="other">Other</option>
 	</select><br>
 	<p>Username:</p>
-	<input type="text" name="username" required><br>
+	<input type="text" name="username" value="<%= username != null ? username : "" %>" <%= username != null ? "readonly" : "" %> required><br>
 	<p>Password:</p>
- 	<input type="password" name="password" minlength="4" required><br><br>
+ 	<input type="password" name="password" value="<%= password != null ? password : "" %>" <%= password != null ? "readonly" : "" %> minlength="4" required><br><br>
 	
 	<input type="submit" name="submit" value="Submit">
   </form>

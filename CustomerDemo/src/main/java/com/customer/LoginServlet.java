@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 @WebServlet("/LoginServlet")
@@ -20,19 +21,32 @@ public class LoginServlet extends HttpServlet {
 
 		String username = request.getParameter("uid");
 		String password = request.getParameter("pass");
-		
-		
+
+
 		try {
 			List<customize> cusDetails = CustomerDBUtil.validate(username, password);
-			request.setAttribute("cusDetails", cusDetails);
+
+			if (cusDetails != null && !cusDetails.isEmpty()) {
+				// Create session and store user info
+				HttpSession session = request.getSession();
+				session.setAttribute("username", username);
+				session.setAttribute("password", password);
+				session.setAttribute("cusDetails", cusDetails);
+				session.setMaxInactiveInterval(30 * 60); // 30 minutes
+
+				// Redirect to event view page
+				response.sendRedirect("eventView.jsp");
+			} else {
+				// Login failed - no events found for this user
+				request.setAttribute("errorMessage", "Invalid username or password");
+				RequestDispatcher dis = request.getRequestDispatcher("userLogin.jsp");
+				dis.forward(request, response);
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		RequestDispatcher dis = request.getRequestDispatcher("eventView.jsp");
-		dis.forward(request, response);
-		
+
 	}
 
 }

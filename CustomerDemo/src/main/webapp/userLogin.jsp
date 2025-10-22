@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%
+    // If user is already logged in, redirect to event view
+    String loggedInUser = (String) session.getAttribute("username");
+    if (loggedInUser != null) {
+        response.sendRedirect("eventView.jsp");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,12 +24,20 @@
 	<form action="log" method="post">
 	<h3>Hi, Welcome!</h3>
 		<br>
+		<%
+		    String errorMessage = (String) request.getAttribute("errorMessage");
+		    if (errorMessage != null) {
+		%>
+		    <p style="color: red; text-align: center;"><%= errorMessage %></p>
+		<%
+		    }
+		%>
 		<input type="text" name="uid" required placeholder="Enter Your Username">
 		<br>
 		<input type="password" name="pass" minlength="4" required placeholder="Enter Your Password">
-		
+
 		<input type="submit" name="submit" value="login" class="form-btn">
-		
+
 		<h5>Didn't you register? <a href="eventRegistration.jsp">Create an Event & Register Now</a></h5>
 	</form>
 	</div>

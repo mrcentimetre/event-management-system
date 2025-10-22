@@ -1,6 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+    // Check if user is logged in
+    String username = (String) session.getAttribute("username");
+    if (username == null) {
+        response.sendRedirect("userLogin.jsp");
+        return;
+    }
+
+    // If cusDetails is not in request, get it from session
+    if (request.getAttribute("cusDetails") == null) {
+        Object cusDetails = session.getAttribute("cusDetails");
+        if (cusDetails != null) {
+            request.setAttribute("cusDetails", cusDetails);
+        }
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +34,7 @@
             <li><a href="#">About</a></li>
             <li><a href="#">Services</a></li>
             <li><a href="#">Contact</a></li>
-            <li><a href="userLogin.jsp">Log in</a></li>
+            <li><a href="LogoutServlet">Logout</a></li>
           </ul>
         </div>
     </nav>
